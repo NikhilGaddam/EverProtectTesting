@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import com.example.nicky.everprotecttesting.R;
 
+import ExataClass.Corner_Image;
+
 
 /**
  * Created by Rp on 8/30/2016.

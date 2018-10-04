@@ -1,19 +1,38 @@
 package com.example.nicky.everprotecttesting;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import Adapters.PagerAdapterForBanner;
 import Adapters.RecycleAdapter_Cusine;
 import Adapters.RecycleAdapter_Dish;
 import BeanClasses.BeanClassForCusine;
 import BeanClasses.BeanClassForDish;
+import customfonts.MyTextView_Lato_Light;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private PagerAdapterForBanner pagerAdapterForBanner;
 
     private ViewPager viewPager;
-
+    MyTextView_Lato_Light textView;
+    CoordinatorLayout coordinatorLayout;
 
 
     private ArrayList<BeanClassForDish> beanClassForDashboards;
@@ -53,9 +73,34 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
 
-
+        textView = (MyTextView_Lato_Light) findViewById(R.id.location);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_main);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M&&checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1000);
+        }
+        else{
+            LocationManager locationManager=(LocationManager)getSystemService(Context.LOCATION_SERVICE);
+            Location location=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            try {
+                String place = hereLocation(location.getLatitude(), location.getLongitude());
+                Pattern p=Pattern.compile("India");
+                Matcher m=p.matcher(place);
+                if(m.find())
+                {textView.setText(place);}
+                else
+                {
+                    Snackbar snackbar = Snackbar.make(coordinatorLayout, "This App is only available in India", Snackbar.LENGTH_INDEFINITE);
+                    snackbar.show();
+                }
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+                Toast.makeText(MainActivity.this,"Not Found!",Toast.LENGTH_SHORT).show();
+            }
+        }
 
 //        Dish Recyclerview Code
 
@@ -127,5 +172,73 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode,permissions,grantResults);
+        switch(requestCode){
+            case 1000:{
+                if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                    LocationManager locationManager=(LocationManager)getSystemService(Context.LOCATION_SERVICE);
+                    Location location=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    try {
+                        String place = hereLocation(location.getLatitude(), location.getLongitude());
+                        Pattern p=Pattern.compile("India");
+                        Matcher m=p.matcher(place);
+                        if(m.find())
+                        {textView.setText(place);}
+                        else
+                        {
+                            Snackbar snackbar = Snackbar.make(coordinatorLayout, "This App is only available in India ", Snackbar.LENGTH_INDEFINITE);
+                            snackbar.show();
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        e.printStackTrace();
+                        Toast.makeText(MainActivity.this,"Not Found!",Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(MainActivity.this,"Permission Not Granted!",Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+        }
+    }
+
+    private String hereLocation(double lat, double lon) {
+        //String cityName= "";
+        //String stateName="";
+        //String postalCode="";
+        //String country="";
+        String address="";
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        //Geocoding is the process of transforming a street address or other description of a location into a (latitude, longitude) coordinate.
+        // Reverse geocoding is the process of transforming a (latitude, longitude) coordinate into a (partial) Address
+        List<Address> addresses;
+        try {
+            addresses = geocoder.getFromLocation(lat,lon,10);
+            if (addresses.size()>0){
+                for(Address adr:addresses){
+                    if(adr.getLocality()!=null&&adr.getLocality().length()>0){
+                        //cityName=adr.getLocality();
+                        //stateName=adr.getAdminArea();
+                        //postalCode=adr.getPostalCode();
+                        //country=adr.getCountryName();
+                        address=adr.getAddressLine(0);
+                        break;
+                    }
+
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return address;
     }
 }

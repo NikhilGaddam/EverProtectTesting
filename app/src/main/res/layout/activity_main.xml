@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:background="#fff"
     android:orientation="vertical">
 
@@ -18,24 +19,24 @@
             android:orientation="vertical">
 
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <!--<FrameLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
 
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="171dp"
-        android:background="@drawable/white_img"/>
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="171dp"-->
+        <!--android:background="@drawable/toolbar"/>-->
 
-                <ImageView
-                    android:layout_width="25.3dp"
-                    android:layout_height="19dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="23.7dp"
-                    android:src="@drawable/ic_menu"/>
+                <!--<ImageView-->
+                    <!--android:layout_width="25.3dp"-->
+                    <!--android:layout_height="19dp"-->
+                    <!--android:layout_marginTop="15dp"-->
+                    <!--android:layout_marginLeft="23.7dp"-->
+                    <!--android:src="@drawable/ic_menu"/>-->
 
-            </FrameLayout>
+            <!--</FrameLayout>-->
 
     <LinearLayout
         android:tag="sticky"
@@ -58,21 +59,26 @@
             android:src="@drawable/ic_location"/>
 
         <customfonts.MyTextView_Lato_Light
+            android:maxLines="1"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Brose Near By Place"
+            android:text="Your Location is :"
             android:layout_marginLeft="14.3dp"
             android:textSize="16.7sp"
             android:layout_gravity="center"
             android:textColor="#373737"/>
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="21.3dp"
+        <customfonts.MyTextView_Lato_Light
+            android:maxLines="1"
+            android:layout_weight="1"
+            android:id="@+id/location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginLeft="14.3dp"
+            android:textSize="16.7sp"
             android:layout_gravity="center"
-            android:layout_marginRight="16.3dp"
-            android:tint="#373737"
-            android:src="@drawable/ic_right_arrow"/>
+            android:textColor="#373737"/>
 
 
 
@@ -91,16 +97,10 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="You might like"
-            android:textSize="19.3sp"
+            android:text="Natural Disasters You are Prone "
+            android:textSize="17.3sp"
             android:textColor="#373737"/>
 
-        <customfonts.MyTextView_Lato_Light
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="See all"
-            android:textColor="#a5a5a5"
-            android:textSize="14sp"/>
 
     </LinearLayout>
 
@@ -136,16 +136,11 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/food"
+            android:text="@string/tools"
             android:textSize="19.3sp"
             android:textColor="#373737"/>
 
-        <customfonts.MyTextView_Lato_Light
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="See all"
-            android:textColor="#a5a5a5"
-            android:textSize="14sp"/>
+
 
     </LinearLayout>
 
