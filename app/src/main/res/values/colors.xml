@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#E92324</color>
-    <color name="colorPrimaryDark">#E92324 </color>
+    <color name="colorPrimaryDark">#A72025 </color>
     <color name="colorAccent">#FF4081</color>
+
 
 
     <!--Category Type Tab Color-->

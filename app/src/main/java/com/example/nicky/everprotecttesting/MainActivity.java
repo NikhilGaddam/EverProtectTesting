@@ -17,9 +17,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     MyTextView_Lato_Light textView;
     CoordinatorLayout coordinatorLayout;
-
+    private Toolbar toolbar;
 
     private ArrayList<BeanClassForDish> beanClassForDashboards;
 
@@ -74,6 +76,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar); //NO PROBLEM !!!!
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
         textView = (MyTextView_Lato_Light) findViewById(R.id.location);
@@ -108,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView_dish = (RecyclerView) findViewById(R.id.recyclerview_dish);
         beanClassForDashboards = new ArrayList<>();
 
+        recyclerView_dish.setNestedScrollingEnabled(false);
 
 
         for (int i = 0; i < image.length; i++) {
@@ -131,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView_cusine = (RecyclerView) findViewById(R.id.recyclerview_cusine);
         beanClassForCusines = new ArrayList<>();
-
+        recyclerView_cusine.setNestedScrollingEnabled(false);x
 
 
         for (int i = 0; i < image1.length; i++) {
@@ -163,15 +172,6 @@ public class MainActivity extends AppCompatActivity {
         pagerAdapterForBanner = new PagerAdapterForBanner(getSupportFragmentManager());
 
         viewPager.setAdapter(pagerAdapterForBanner);
-
-
-
-
-
-
-
-
-
 
     }
 
